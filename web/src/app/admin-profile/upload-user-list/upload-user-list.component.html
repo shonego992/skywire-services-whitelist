@@ -1,0 +1,16 @@
+<div class="card" *ngIf="showImport === true">
+  <div class="header">
+    <div class="title">{{'USER.UPLOAD_FILE' | translate}}</div>
+  </div>
+
+  <div class="body">
+    <input type="file" value="Submit" (change)="selectFile($event)">
+  </div>
+</div>
+
+<div *ngIf="showImport === false">
+  <!--table for imported data-->
+  <app-admin-miner-overview>
+
+  </app-admin-miner-overview>
+</div>

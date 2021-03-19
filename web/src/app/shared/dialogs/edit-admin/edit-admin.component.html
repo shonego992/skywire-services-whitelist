@@ -1,0 +1,23 @@
+<div class="container" *ngIf="isDataAvailable">
+  <div class="admin-details">
+    <h3>{{'USER.USER_EMAIL' | translate}}: {{admin?.username}}</h3>
+    <form (ngSubmit)="submit" #formControl="ngForm">
+
+      <!--Contains mat-hint for characters count and has maxLengt set-->
+      <div class="form">
+        <mat-form-field>
+          <mat-select name="rights" placeholder="{{'USER.ADMIN_RIGHTS' | translate}}" multiple [(ngModel)]="admin.rights" [compareWith]="compareWithFunc">
+            <mat-option *ngFor="let right of rights" [value]="right.value">
+              {{right.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <button class="btn" [type]="submit" [disabled]="!formControl.valid" (click)="saveEdit()">{{'MODALS.SAVE' | translate}}</button>
+        <button class="btn transparent" (click)="onCancel()" tabindex="-1">{{'MODALS.CANCEL' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

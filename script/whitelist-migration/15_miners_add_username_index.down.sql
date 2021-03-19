@@ -1,0 +1,1 @@
+DROP INDEX miners_username_index;

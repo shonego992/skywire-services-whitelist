@@ -1,0 +1,141 @@
+@import 'variables';
+
+.mat-drawer-container {
+  color: inherit !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  box-shadow: 0 0 0px 1000px #fff inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.dark-form {
+  input.mat-input-element {
+    margin-bottom: 5px !important;
+  }
+}
+
+.mat-form-field-prefix {
+  margin-right: 10px;
+}
+
+.mat-cell, .mat-header-cell {
+  padding: 0 5px;
+}
+
+.mat-cell:first-child, .mat-cell:last-child, .mat-header-cell:first-child, .mat-header-cell:last-child {
+  padding: 0 !important;
+}
+
+.mat-header-cell {
+  font-size: 14px;
+  font-weight: 500;
+  color: $dark;
+}
+
+.mat-cell {
+  color: $grey;
+}
+
+.mat-row, .mat-header-row {
+  min-height: 60px;
+}
+
+.mat-paginator-container {
+  padding: 0 !important;
+}
+
+.mat-dialog-actions {
+  padding: 0 !important;
+  margin: 20px 0 0 !important;
+}
+
+//.mat-list-item-content {
+//  padding: 0 !important;
+//}
+//.mat-card {
+//  box-shadow: none !important;
+//}
+//.mat-icon-button {
+//  border-radius: 50% !important;
+//  width: 30px !important;
+//  height: 30px !important;
+//  line-height: 30px !important;
+//}
+//.icon-btn {
+//  background: #0072FF !important;
+//}
+//.mat-form-field {
+//  width: 90%;
+//}
+//input.mat-input-element {
+//  margin-bottom: 5px !important;
+//}
+//.mat-form-field-appearance-legacy .mat-form-field-prefix .mat-icon, .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-icon {
+//  color: #0072FF;
+//}
+//mat-raised-button.mat-primary  {
+//  background-color: #0072FF !important;
+//}
+//.mat-list-item-content {
+//  color: #0072FF !important;
+//}
+//.form-layout {
+//  background-color: #fff;
+//  height: 100vh;
+//}
+//.login-icon {
+//  color: #0072FF;
+//}
+//h1 {
+//  color: #0072FF;
+//  font-weight: bolder;
+//  font-size: 45px;
+//}
+//
+//.app_title {
+//  text-align: center;
+//}
+//
+//.img-layout {
+//  height: 100vh;
+//  background: url('/assets/images/background.png');
+//}
+//.half {
+//  padding: 30px 30px;
+//}
+//.filter {
+//  width: 300px;
+//  margin-right: 10px;
+//}
+//.mat-cell:last-child, .mat-header-cell:last-child {
+//  display: contents !important;
+//}
+//.mat-cell, .mat-footer-cell, .mat-header-cell {
+//  justify-content: space-between !important;
+//}
+//.mat-button.mat-accent[disabled], .mat-button.mat-primary[disabled], .mat-button.mat-warn[disabled], .mat-button[disabled][disabled], .mat-icon-button.mat-accent[disabled], .mat-icon-button.mat-primary[disabled], .mat-icon-button.mat-warn[disabled], .mat-icon-button[disabled][disabled], .mat-stroked-button.mat-accent[disabled], .mat-stroked-button.mat-primary[disabled], .mat-stroked-button.mat-warn[disabled], .mat-stroked-button[disabled][disabled] {
+//  color: #000 !important;
+//}
+//
+//mat-cell, mat-footer-cell, mat-header-cell{
+//  margin-right: 10px;
+//  display: block !important;
+//  min-height: auto !important;
+//}
+//
+//@media (max-width: 500px) {
+//  .add-admin {
+//    font-size: 13px;
+//  }
+//}

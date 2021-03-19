@@ -1,0 +1,29 @@
+@import 'variables';
+
+img {
+  width: 200px;
+  margin: 30px 0 30px 40px;
+}
+
+a {
+  .sidenav-icon {
+    margin-right: 26px;
+    color: $grey;
+  }
+
+  .nav-caption {
+    color: $grey;
+  }
+
+  &.active {
+    .sidenav-icon, .nav-caption {
+      color: $white;
+    }
+  }
+}
+
+::ng-deep {
+  .mat-list-item-content {
+    padding-left: 60px !important;
+  }
+}

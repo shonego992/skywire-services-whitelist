@@ -1,0 +1,89 @@
+<div class="grid">
+  <div>
+    <div class="card">
+      <div class="header">
+        <div class="title">{{'MINER.NODES' | translate}}</div>
+      </div>
+      <div class="body">
+        <div *ngFor="let node of miner?.nodes; let i = index" class="node">
+          <div *ngIf="miner && node.disabled == miner.disabled">
+            <div class="key">
+              <mat-form-field class="node-input">
+                <input
+                  [readonly]="node.id && node.id != 0 && miner.type == 1"
+                  type="text"
+                  matInput
+                  placeholder="{{'WHITELIST.NODE_KEY' | translate}} {{i+ 1}}"
+                  [(ngModel)]="node.key"
+                  (keyup)="inputValidator($event)"
+                  required
+                  name="input">
+                <mat-error>{{'ERRORS.MANDATORY_FIELD' | translate}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="uptime" *ngIf="node.uptime.uptime">
+              <div>{{'WHITELIST.NODE_UPTIME' | translate}}</div>
+              <div>{{node.uptime.uptime | uptime}}</div>
+            </div>
+            <div class="uptime" *ngIf="node.uptime.uptime">
+              <div>{{'WHITELIST.NODE_PERCENTAGE' | translate}}</div>
+              <div>{{node.uptime.percentage | number:'1.2-5' }}</div>
+            </div>
+            <div class="uptime" *ngIf="!node.uptime.uptime">
+              <div>{{'WHITELIST.NODE_UPTIME' | translate}}</div>
+              <div>{{'WHITELIST.CURRENTLY_NA' | translate}}</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn" (click)="close()" tabindex="-1">{{'MINER.CLOSE' | translate}}</button>
+      </div>
+    </div>
+    <div class="card" *ngIf="images && images.length >0">
+      <div class="header">
+        <div class="title">{{ 'MINER.IMAGES' | translate }}</div>
+      </div>
+      <div class="body">
+        <ngx-image-gallery id="currentImages" #currentImages
+                           [images]="images"
+                           [conf]="conf"
+                           (onClose)="galleryClosed('currentImages')"
+                           (onImageClicked)="galleryImageClicked($event, 'currentImages')">
+        </ngx-image-gallery>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="card">
+      <div class="header">
+        <div class="title">{{'MINER.OVERVIEW' | translate}} #{{minerId}}</div>
+      </div>
+      <div class="body">
+        <div class="data">
+          <div class="key"><mat-icon>date_range</mat-icon>{{'MINER.CREATED_AT' | translate}}</div>
+          <div class="value">{{dateCreated}}</div>
+        </div>
+        <div class="data">
+          <div class="key"><mat-icon>date_range</mat-icon>{{'MINER.UPDATED_AT' | translate}}</div>
+          <div class="value">{{dateCreated}}</div>
+        </div>
+        <div class="data" *ngIf="miner && miner.disabled">
+          <div class="key"><mat-icon>date_range</mat-icon>{{'MINER.DISABLED_ON' | translate}}</div>
+          <div class="value">{{dateDisabled}}</div>
+        </div>
+        <div class="data" *ngIf="miner?.batchLabel">
+          <div class="key"><mat-icon>inbox</mat-icon>{{'MINER.BATCH_LABEL' | translate}}</div>
+          <div class="value">{{miner?.batchLabel}}</div>
+        </div>
+        <div class="data" *ngIf="miner && !miner.disabled; else lastNodes">
+          <div class="key"><mat-icon>drag_indicator</mat-icon>{{'WHITELIST.NODE_KEYS_ADDED' | translate}}</div>
+          <div class="value">{{miner?.nodes.length}}</div>
+        </div>
+        <ng-template #lastNodes>
+          <div class="key"><mat-icon>drag_indicator</mat-icon>{{'WHITELIST.LAST_NODE_KEYS_ADDED' | translate}}</div>
+          <div class="value">{{miner?.nodes.length}}</div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,2 @@
+ALTER TABLE images 
+DROP COLUMN IF EXISTS miner_id;

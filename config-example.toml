@@ -1,0 +1,196 @@
+[database]
+user = "postgres"
+password = "supersecretpass"
+host = "localhost"
+port = 5433
+name = "postgres"
+sslmode = "disable"
+migration-source = "file://script/database-migration"
+log-mode = true
+
+[server]
+ip = "127.0.0.1"
+port = 8081
+frontend-endpoint = "http://localhost:4201/"
+route-login = "login"
+route-miners-page = "user-miners"
+release-mode = false
+log-level = "info"
+
+[uptime]
+uptime-service= "http://ec2-54-93-235-5.eu-central-1.compute.amazonaws.com:8085/api/v1/"
+uptime-getuptime-endpoint= "info/getNodeInfo?nodes="
+uptime-getuptime-export= "info/getNodeInfoExport?nodes="
+uptime-get-all-uptimes-endpoint = "info/getAllUptimes"
+
+[shopify]
+disable-shopify = false
+refresh-interval = "12h"
+shop-user = "e83357fb1bb901f023e4cc3d04227f28"
+shop-password = "61dd87d2afa9922d83f201bec37ff053"
+shop-url = "skycoinstore.myshopify.com/admin/orders.json"
+product-id = "skyminer-01"
+email-notification-sending = false
+
+[reminder]
+schedule-uptime-notification=false
+uptime-notification-at-startup=false
+enable-uptime-reward-add-address-reminder = false
+days-until-end-of-month= 5
+run-uptime-reward-add-adddress-reminder-at-startup = false
+
+[rpc]
+protocol = "tcp"
+host = "127.0.0.1:9091"
+    [rpc.user]
+    protocol = "tcp"
+    address = "127.0.0.1:9090"
+
+[bucket]
+region = "eu-central-1"
+name = "bucket-name-goes-here"
+disable-image-upload = false
+
+[c0rs]
+allowed-headers = [
+    "Content-Type",
+    "Authorization",
+    "Origin"
+]
+allowed-methods = [
+    "GET",
+    "POST",
+    "PATCH"
+]
+max-age = "12h"
+
+[token]
+expiration-in-days = 3
+
+[jwt]
+realm = "realm"
+key = "key"
+timeout = "1h"
+max-refresh = "1h"
+
+[fixup]
+import-created-at = false
+change-created-date-of-miners = false
+
+[export]
+threads = 20
+reward-percentage=0.75
+
+[template]
+api-key = "m8LCi0EqNFhqnyg7lBjVmw"
+from-email = "test@skycoin.net"
+from-name = "skycoin.net"
+
+disable-email-sending = false
+
+every-mail-intro = "Dear Skyfleet Member,<br /><br />"
+every-mail-signature = """
+<br /><br />\
+We are delighted to help you at <a href='store.skycoin.net/pages/support'>store.skycoin.net/pages/support</a>.<br /><br />\
+
+Best regards,<br /><br />\
+
+Skycoin Team
+"""
+
+miners-imported-for-new-account-subject = "New Skywire Whitelisting System Account"
+miners-imported-for-new-account-content = "Your new Skywire whitelisting system user account is waiting for you to claim your miner(s). Click on the following URL and follow the 'Forgot your password' flow to gain access: [[link_to_whitelist_login_page]]. Instructions on how to use the Skywire Whitelisting system can be found on GitHub: <a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System</a>."
+miners-imported-for-existing-account-subject = "Additional Miner Import - Skywire Whitelisting System"
+miners-imported-for-existing-account-content = "Please use the following link to verify the new imported miners that have been associated with your Skywire whitelisting system user account: <a href='[[link_to_account]]'>[[link_to_account]]</a>."
+
+application-created-subject = "Whitelist Application Successfully Submitted!"
+application-created-content = "You submitted a new whitelist application request. You can check the progress of your application by logging into your Skywire whitelisting system user account and visiting the 'Whitelist Form' page: [[link_to_login]]. As soon as the status of your application changes, you will receive another email notification."
+application-updated-subject = "Whitelist Application Status Update"
+application-updated-content = """
+The status of your whitelist application was changed to: [[status_of_application]] \
+Admin comment: [[comment]] \
+
+Please log in to our service to follow up on your application or review your approved miner details: [[link_to_login]]. \
+
+You can find the Skywire Whitelisting System User Guide on our GitHub wiki: <a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System</a> \
+
+Whitelist applications must comply with the Skywire testnet rules: <a href='https://github.com/skycoin/skywire/blob/master/testnet_rules.md'>https://github.com/skycoin/skywire/blob/master/testnet_rules.md</a>. \
+"""
+
+miner-nodes-added-subject = "Automated Application Created - Node Quantity Increase"
+miner-nodes-added-content = """
+An automated whitelist application has been created after you surpassed the approved node quantity of your miner. Please make sure to submit additional pictures by resubmitting the automatically created application. Instructions can be found on GitHub: <a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#auto-application-creation'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#auto-application-creation</a> \
+
+You can check the progress of your application by logging into your Skywire whitelisting system user account and visiting the 'Whitelist Form' page: [[link_to_login]].
+"""
+
+transfer-miner-subject = "Skywire Whitelisting System - Received New Miner"
+transfer-miner-content = "The user: [[link_of_user_sender]] successfully transferred a miner to your account. Please log in to our service, validate the miner details and adjust the associated public keys if necessary: [[link_to_login]]. Instructions on how to change your account data can be found on GitHub: <a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#manage-registered-data'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#manage-registered-data</a>."
+
+deleted-miner-subject = "Skywire Whitelisting System - Miner Deleted"
+deleted-miner-content = "One of our admins has deleted one of your miners. Please log in to our service to verify which miner was removed: [[link_to_login]]."
+
+reenabled-miner-subject = "Skywire Whitelisting System - Miner reenabled"
+reenabled-miner-content = "One of our admins has re-enabled one of your miners. Please log in to our service to verify which miner was re-enabled and verify its data: [[link_to_login]]."
+
+shopify-import-subject = "Official Skyminer Purchase - Whitelisting System Account"
+shopify-import-content = """
+thank you for purchasing an Official Skyminer, we are happy to welcome you on board!<br /><br />\
+
+We encourage you to join our community on Telegram and enter the Official Miner Chat by using this link: <a href='https://t.me/joinchat/CuXlREYrme0eXf1mj9Svdg'>https://t.me/joinchat/CuXlREYrme0eXf1mj9Svdg</a>.<br />
+<i>Please do not share this link as this chat is dedicated exclusively to Official Skyminer owners</i>.<br /><br />\
+
+Check out <a href='https://github.com/skycoin/skywire/wiki/Skyminer-Official-Guide'>the official Skyminer guide</a> to get an introduction and outline of the necessary steps to:<br />\
+<ul>
+<li>inform yourselves about the <a href='https://github.com/skycoin/skywire/blob/master/testnet_rules.md'>rewards and rules</a> of the Skywire testnet</li>
+<li><a href='https://downloads.skycoin.net/skywire/Skywire_Miner_Assembly_Manual_2_1.pdf'>assemble your Official Skyminer</a></li>
+<li><a href='https://github.com/skycoin/skywire/wiki/Skyminer-Skywire-installation-guide'>setup the software</a> & <a href='https://github.com/skycoin/skywire/wiki/Networking-guide-for-the-official-router'>the router configuration</a></li>
+<li>register your public keys in the <a href='[[base_url]]'>Skywire Whitelisting System</a> to start receiving rewards</li>
+</ul>
+"""
+
+third-batch-email-subject= "Official Skyminer Purchase - New Skyminer Waiting In Your Whitelisting System Account"
+third-batch-email-content="""
+<p>thank you for purchasing another Official Skyminer, we are glad to see that you stay engaged with the project and keep supporting us!</p>
+<p>You will find all the necessary information for setting up your official Skyminer in this email.
+In case you did not join already, we highly encourage you to join our community on Telegram and enter the Official Miner Chat by using this link: <a href='https://t.me/joinchat/CuXlREYrme0eXf1mj9Svdg'>https://t.me/joinchat/CuXlREYrme0eXf1mj9Svdg</a>.
+</p>
+<p><i>Please do not share this link as this chat is dedicated exclusively to Official Skyminer owners</i>.</p>
+<p>Check out <a href='https://github.com/skycoin/skywire/wiki/Skyminer-Official-Guide'>the official Skyminer guide</a> to get an introduction and outline of the necessary steps to:</p>
+<ul>
+    <li> inform yourselves about the <a href='https://github.com/skycoin/skywire/blob/master/testnet_rules.md'>rewards and rules</a> of the Skywire testnet</li>
+    <li><a href='https://downloads.skycoin.net/skywire/Skywire_Miner_Assembly_Manual_2_1.pdf'>assemble your Official Skyminer</a></li>
+    <li><a href='https://github.com/skycoin/skywire/wiki/Skyminer-Skywire-installation-guide'>setup the software</a> & the <a href='https://github.com/skycoin/skywire/wiki/Networking-guide-for-the-official-router'> router configuration</a></li>
+    <li>register your public keys in the <a href='[[base_url]]'>Skywire Whitelisting System</a> to start receiving rewards</li>
+</ul>
+"""
+
+notify-user-about-uptime-subject= " Skywire Whitelisting System - Nodes Did Not Meet The Uptime Requirement"
+notify-user-about-uptime-content="""
+<p>thank you for participating in the Skywire testnet. You are receiving this email because none of your nodes
+met the uptime requirement last month.</p>
+<p>You are being encouraged to ensure that your nodes are online by following <a href='https://github.com/skycoin/skywire/wiki/How-to-verify-that-your-nodes-are-online'>this guide.</a></p>
+<p>In case your nodes are not online and you cannot resolve the issue yourself, please join us on Telegram:</p>
+<ul>
+<li><p>Skycoin main chat: <a href='https://t.me/Skycoin'>https://t.me/Skycoin</a></p></li>
+<li><p>Skywire support channel: <a href='https://t.me/skywire'>https://t.me/skywire</a></p></li>
+</ul>
+<p>You can review your current uptime in the Whitelisting system in the 'Miners' tab: [[link_to_account]].</p>
+<p>Simply click on the miner you want to evaluate and the uptime of your nodes will be displayed: </p>
+<ul>
+<li><p><a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#review-data'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#review-data</a></p></li>
+</ul>
+"""
+
+remind-user-about-address-subject="Skywire Whitelisting System - Skycoin Wallet Reward Address MISSING"
+remind-user-about-address-content= """
+<p>thank you for participating in the Skywire testnet. You are receiving this email because our calculations determined that you are able to reach the uptime requirement for this month.<p>
+<p>Unfortunately, we had to discover that your user account in the Skywire Whitelisting System does not have a Skycoin wallet reward address associated with it.</p>
+<p style='text-align:center;'><b>Please note that even if you do meet the uptime requirement, you will not receive rewards unless you add a Skycoin wallet reward address to your user account.</b></p>.
+<p>The Skycoin wallet reward address can be added & changed in the 'Account Info' section of your user account: [[link_to_login]]</p>
+<p style='text-align:center;'><b>You must update your account data and add a Skycoin wallet reward address until the last day of this month to be eligible for receiving Skywire testnet rewards.</b></p>
+<p>Please check out this guide in case you need guidance in using the whitelisting system:</p>
+<ul>
+<li><p><a href='https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#usage'>https://github.com/skycoin/skywire/wiki/Skywire-Whitelisting-System#usage</a></p></li>
+</ul>
+"""

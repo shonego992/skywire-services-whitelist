@@ -1,0 +1,131 @@
+<div class="card">
+  <div class="header">
+    <div class="title">{{ 'HEADER.ALL_MINERS' | translate }}</div>
+
+    <button mat-icon-button color="primary" [matMenuTriggerFor]="filterMenu">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+
+  <div class="body datatable">
+    <div class="responsive-table">
+      <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.MINER_ID' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.id}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.USERNAME' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{row.username}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.TYPE' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{mapMinerType(row.type)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="created_at">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.CREATED_AT' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{getDateValue(row.createdAt)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="updated_at">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.UPDATED_AT' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{getDateValue(row.updatedAt)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="is_active">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'COMMON.IS_ACTIVE' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.disabled ? ('COMMON.NO' | translate) : ('COMMON.YES' | translate)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="label">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.BATCH_LABEL' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.batchLabel }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="gifted">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'MINER.IS_GIFTED' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.gifted && row.gifted === true ? ('COMMON.YES' | translate) : ('COMMON.NO' | translate)}}</mat-cell>
+        </ng-container>
+
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+
+          <mat-cell *matCellDef="let row; let i=index;" class="actions">
+            <a type="button" mat-icon-button class="icon-btn" color="primary" target="_blank" [routerLink]="['/admin-view-miner']" [queryParams]="{id: row.id}">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </a>
+
+            <button *ngIf="row.disabled" mat-icon-button class="icon-btn" color="primary" (click)="activateMiner(row.id)">
+              <mat-icon aria-label="Activate">done</mat-icon>
+            </button>
+
+            <button *ngIf="!row.disabled" mat-icon-button class="icon-btn" color="primary" (click)="deleteMiner(row.id)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+
+    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+      {{'USER.NO_RESULTS' | translate}}
+    </div>
+
+    <div class="controls right">
+      <mat-paginator #paginator
+                     [length]="dataSource.filteredData.length"
+                     [pageIndex]="0"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="body exportSection">
+    <mat-form-field class="dateStart">
+      <input matInput [matDatepicker]="pickerStart" placeholder="{{'MINER.START_DATE' | translate}}" [(ngModel)]="startDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+      <mat-datepicker #pickerStart></mat-datepicker>
+      <mat-hint>{{'MINER.EXPORT_DATA_ALL' | translate}}</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field class="dateEnd">
+      <input matInput [matDatepicker]="pickerEnd" placeholder="{{'MINER.END_DATE' | translate}}" [(ngModel)]="endDate">
+      <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+      <mat-datepicker #pickerEnd></mat-datepicker>
+    </mat-form-field>
+
+    <button class="btn" (click)="exportMinersData()">{{'MINER.EXPORT_DATA' | translate}}</button>
+    <button class="btn" (click)="exportMinersNoRestrictions()">{{'MINER.EXPORT_DATA_NO_LIMIT' | translate}}</button>
+  </div>
+</div>
+
+<mat-menu #filterMenu="matMenu" class="filter-panel">
+  <div (click)="$event.stopPropagation()">
+    <mat-form-field floatPlaceholder="never" color="accent" class="filter">
+      <input matInput #filter placeholder="{{'MINER.FILTER' | translate}}">
+    </mat-form-field>
+
+    <mat-form-field floatPlaceholder="never" color="accent" class="filter">
+      <mat-select [(value)]="filterActiveState" (selectionChange)="chooseActiveState($event.value)">
+        <mat-option *ngFor="let activeState of activeStates" [value]="activeState.value">
+          {{activeState.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-menu>

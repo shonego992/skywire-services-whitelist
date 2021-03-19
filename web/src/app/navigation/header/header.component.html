@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" *ngIf="isAuth">
+  <div  fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()"><mat-icon>menu</mat-icon></button>
+  </div>
+  <div>
+    <span class="title">{{'COMMON.APP_TITLE' | translate}}</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="user" *ngIf="user" [matMenuTriggerFor]="userMenu">
+    <span>{{ user.username }}</span>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </div>
+  <mat-menu #userMenu="matMenu">
+    <button
+      routerLink="/account-info"
+      mat-menu-item
+    >
+      {{'HEADER.ACCOUNT_INFO' | translate}}
+    </button>
+    <button
+      (click)="onLogout()"
+      mat-menu-item
+    >
+      {{'HEADER.LOGOUT' | translate}}
+    </button>
+  </mat-menu>
+</mat-toolbar>

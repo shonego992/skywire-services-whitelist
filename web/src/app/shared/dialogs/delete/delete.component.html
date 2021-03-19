@@ -1,0 +1,11 @@
+<div class="container">
+  <h3 mat-dialog-title>{{'MODALS.ARE_YOU_SURE' | translate}}</h3>
+  <div mat-dialog-content>
+      {{data.message | translate}}
+  </div>
+
+  <div mat-dialog-actions>
+    <button class="btn danger" [mat-dialog-close]="1" (click)="confirmDelete()">{{'MODALS.CONFIRM' | translate}}</button>
+    <button class="btn transparent" (click)="onNoClick()" tabindex="-1">{{'MODALS.CANCEL' | translate}}</button>
+  </div>
+</div>

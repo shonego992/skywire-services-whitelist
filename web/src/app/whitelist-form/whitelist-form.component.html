@@ -1,0 +1,120 @@
+<div class="card">
+  <div class="header">
+    <div class="title">
+      <mat-icon *ngIf="applicationInProgress && applicationStatus" [ngClass]="statusClass">{{statusIcon}}</mat-icon>
+      {{'WHITELIST.APPLICATION' | translate}}
+    </div>
+  </div>
+  <div class="body">
+    <div *ngIf="applicationInProgress === false">
+      <span>{{'WHITELIST.OFFICIAL_AUTO_SUBMIT' | translate}}
+        <a href="https://github.com/skycoin/skywire/wiki/Skyminer-Official-Guide#3-enter-your-skyminer-public-keys-and-skycoin-wallet-address" target="_blank" rel="noreferrer nofollow">
+          Official miners registration
+        </a>
+      </span>
+      <span class="block-span">{{'WHITELIST.RULES' | translate}} <a href="https://github.com/skycoin/skywire/blob/master/testnet_rules.md" target="_blank" rel="noreferrer nofollow">Whitelisting rules.</a></span>
+    </div>
+    <div *ngIf="applicationInProgress && applicationStatus" class="status">
+      <div class="data">
+        <div class="key"><mat-icon>label</mat-icon>{{'WHITELIST.APPLICATION_STATUS' | translate}}</div>
+        <div class="value">{{"WHITELIST." + applicationStatus | translate}}</div>
+      </div>
+      <div class="data">
+        <div class="key"><mat-icon>date_range</mat-icon>{{'WHITELIST.CREATED_AT' | translate}}</div>
+        <div class="value">{{dateCreated}}</div>
+      </div>
+      <div class="data">
+        <div class="key"><mat-icon>date_range</mat-icon>{{'WHITELIST.LAST_UPDATE' | translate}}</div>
+        <div class="value">{{lastUpdate}}</div>
+      </div>
+      <div class="data" *ngIf="userComment">
+        <div class="key"><mat-icon>comment</mat-icon>{{'WHITELIST.ADMIN_COMMENT' | translate}}</div>
+        <div class="value">{{userComment}}</div>
+      </div>
+    </div>
+
+    <div class="separator"></div>
+
+    <div fxLayout fxLayoutAlign="space-between start" fxLayout.lt-lg="column" fxLayoutGap="20px">
+      <div class="half" fxFlex="40" fxFlex.lt-md="100" fxFlex.md="40" fxFlex.lg="50">
+        <div class="nodes">
+          <div class="head">
+            <div class="total-keys" *ngIf="nodes">
+              {{'WHITELIST.NODE_KEYS_ADDED' | translate}} {{nodes.length}}
+            </div>
+            <button type="button" mat-icon-button color="primary" (click)="addNodeKey()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+
+          <div *ngFor="let key of nodes; let i = index">
+            <div class="node">
+              <mat-form-field class="node-input">
+                <input
+                  type="text"
+                  matInput
+                  placeholder="{{'WHITELIST.NODE_KEY' | translate}} {{i+ 1}}"
+                  [(ngModel)]="nodes[i].key"
+                  maxlength="66"
+                  (keyup)="onValidator($event)"
+                  required
+                  name="input">
+                <mat-error>{{'ERRORS.MANDATORY_FIELD' | translate}}</mat-error>
+              </mat-form-field>
+              <button mat-icon-button color="warn" (click)="deleteNodeKey(i)" class="btn-delete">
+                <mat-icon aria-label="Delete">close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="half sec-half" fxFlex="40" fxLayout="column" fxFlex.lt-md="100" fxFlex.md="40" fxFlex.lg="50" fxLayoutGap="20px">
+        <mat-form-field class="description-location">
+          <textarea
+            type="text"
+            matInput
+            placeholder="{{'WHITELIST.LOCATION' | translate}}"
+            [(ngModel)]="location">
+          </textarea>
+        </mat-form-field>
+
+        <mat-form-field class="description-location">
+          <textarea
+            rows="5"
+            type="text"
+            matInput
+            placeholder="{{'WHITELIST.DESCRIPTION' | translate}}"
+            [(ngModel)]="description">
+          </textarea>
+        </mat-form-field>
+
+        <div class="images">
+          <div class="image" *ngFor="let image of images; let i = index">
+            <img [src]="getImagePath(image.path)">
+            <button mat-icon-button color="warn" (click)="deleteOldImage(i)"><mat-icon aria-label="Delete">close</mat-icon></button>
+          </div>
+        </div>
+
+        <label class="btn" for="fileUpload">
+          <input id="fileUpload" type="file" accept="image/*" ngFileSelect [options]="options" multiple (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" style="display: none"
+                 (change)="detectFiles($event)">
+          {{'BUTTONS.UPLOAD_FILES' | translate}}
+        </label>
+
+        <div class="all-files" *ngFor="let file of files; let i = index">
+          <div>{{file.name}}</div>
+        </div>
+
+        <div class="images">
+          <div class="image" *ngFor="let url of urls">
+            <img [src]="url">
+          </div>
+        </div>
+
+        <button class="btn" (click)="uploadFiles()" [disabled]="checkIfDisabled() || buttonDisabled">{{'BUTTONS.SUBMIT' | translate}}</button>
+
+        <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
+      </div>
+    </div>
+  </div>
+</div>

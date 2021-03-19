@@ -1,0 +1,26 @@
+mat-toolbar {
+  padding: 0 20px !important;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.title {
+  font-size: 16px;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
+}
+
+.user {
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-left: 10px;
+  }
+}

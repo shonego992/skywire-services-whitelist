@@ -1,0 +1,47 @@
+<div class="full-background">
+  <div class="mini-container">
+    <div class="centered">
+      <img src="/assets/images/logo.png" alt="Skycoin">
+      <h1>{{'COMMON.APP_TITLE' | translate}}</h1>
+    </div>
+
+    <form class="dark-form" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()">
+      <mat-form-field *ngIf="!tokenNeeded">
+        <span matPrefix><mat-icon class="login-icon">email</mat-icon></span>
+        <input
+          type="email"
+          matInput
+          placeholder="{{'USER.USER_EMAIL' | translate}}"
+          formControlName="username">
+        <mat-error>{{'USER.INVALID_EMAIL' | translate}}</mat-error>
+      </mat-form-field>
+      <mat-form-field *ngIf="!tokenNeeded">
+        <span matPrefix><mat-icon class="login-icon">vpn_key</mat-icon></span>
+        <input
+          type="password"
+          matInput
+          placeholder="{{'USER.PASSWORD' | translate}}"
+          formControlName="password">
+        <mat-error>{{'USER.PASSWORD_CHARACTERS' | translate}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tokenNeeded">
+        <span matPrefix><mat-icon class="login-icon">vpn_key</mat-icon></span>
+        <input
+          type="number"
+          matInput
+          placeholder="{{'USER.2FA' | translate}}"
+          formControlName="token">
+      </mat-form-field>
+
+      <div class="buttons">
+        <div>
+          <a (click)="resetPasswordURL()">{{'USER.FORGOT_PASSWORD' | translate}}</a>
+          <a (click)="signUpURL()">{{'HEADER.SIGN_UP' | translate}}</a>
+        </div>
+        <button class="btn big" type="submit" [disabled]="loginForm.invalid">{{'HEADER.LOGIN' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+{
+  "createUser": [
+    {
+      "email": "test@mail.com",
+      "password": "123456",
+      "roles": {
+        "admin": true
+      },
+      "id": 1
+    }
+  ]
+}

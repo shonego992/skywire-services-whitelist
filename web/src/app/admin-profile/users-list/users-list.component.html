@@ -1,0 +1,79 @@
+<div class="card">
+  <div class="header">
+    <div class="title">{{ 'HEADER.USERS_LIST' | translate }}</div>
+
+    <button mat-icon-button color="primary" [matMenuTriggerFor]="filterMenu">
+      <mat-icon>filter_list</mat-icon>
+    </button>
+  </div>
+  <div class="body datatable">
+    <div class="responsive-table">
+      <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER.USERNAME' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"><a class="username" target="_blank" [routerLink]="['/edit-user']" [queryParams]="{userId: row.username}">{{row.username}}</a></mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'USER.CREATED_AT' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{getDateValue(row.createdAt)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="is_active">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'COMMON.DISABLED' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.status != 2 ? ('COMMON.NO' | translate) : ('COMMON.YES' | translate)}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="own_miner">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>{{'COMMON.OWNS_MINER' | translate}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ownsOfficialMiner(row) ? ('COMMON.YES' | translate) : ('COMMON.NO' | translate)}}</mat-cell>
+        </ng-container>
+
+        <!-- actions -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let row; let i=index;" class="actions">
+            <button mat-icon-button color="primary" class="icon-btn" target="_blank" [routerLink]="['/edit-user']" [queryParams]="{userId: row.username}">
+              <mat-icon aria-label="Edit">edit</mat-icon>
+            </button>
+
+            <button *ngIf="row.status != 2" mat-icon-button class="icon-btn" color="primary" (click)="deleteUser(row)">
+              <mat-icon aria-label="Delete">delete</mat-icon>
+            </button>
+            <button *ngIf="row.status == 2" mat-icon-button class="icon-btn" color="primary" (click)="activateUser(row)">
+              <mat-icon aria-label="Activate">done</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+
+    <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+      {{'USER.NO_RESULTS' | translate}}
+    </div>
+
+    <div class="controls right">
+      <mat-paginator #paginator [length]="dataSource.filteredData.length" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+
+<mat-menu #filterMenu="matMenu" class="filter-panel">
+  <div (click)="$event.stopPropagation()">
+    <mat-form-field floatPlaceholder="never" color="accent" class="filter">
+      <input matInput #filter placeholder="{{'USER.FILTER' | translate}}">
+    </mat-form-field>
+
+    <mat-form-field floatPlaceholder="never" color="accent" class="filter">
+      <mat-select [(value)]="filterActiveState" (selectionChange)="chooseActiveState($event.value)">
+        <mat-option *ngFor="let activeState of activeStates" [value]="activeState.value">
+          {{activeState.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-menu>

@@ -1,0 +1,94 @@
+@import 'variables';
+
+.green {
+  color: $green !important;
+}
+
+.orange {
+  color: $orange !important;
+}
+
+.red {
+  color: $red !important;
+}
+
+.separator {
+  background: darken($white, 10%);
+  margin: 20px -20px;
+  width: calc(100% + 40px);
+  height: 1px;
+}
+
+a {
+  color: $primary;
+}
+
+.nodes {
+  width: 100%;
+
+  .head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .total-keys {
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+  }
+
+  .node {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    button {
+      width: 40px;
+    }
+  }
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+
+  .image {
+    position: relative;
+    padding: 10px;
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+
+    button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 100;
+    }
+  }
+}
+
+.status {
+  width: 50%;
+
+  @media (max-width: 1400px) {
+    width: 100%;
+  }
+}
+
+.title {
+  mat-icon {
+    vertical-align: middle;
+    font-size: 18px;
+  }
+}
+
+.block-span {
+  display: block;
+}

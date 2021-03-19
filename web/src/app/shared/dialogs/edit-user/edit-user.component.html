@@ -1,0 +1,23 @@
+<div class="card small" *ngIf="user">
+  <div class="header">
+    <div class="title">{{userId}}</div>
+  </div>
+  <div class="body">
+    <div class="data">
+      <div class="key"><mat-icon>email</mat-icon>{{'USER.USER_EMAIL' | translate}}</div>
+      <div class="value">{{userId}}</div>
+    </div>
+    <div class="data">
+      <div class="key"><mat-icon>date_range</mat-icon>{{'USER.CREATED_AT' | translate}}</div>
+      <div class="value">{{createdAt}}</div>
+    </div>
+    <div class="data">
+      <div class="key"><mat-icon>payment</mat-icon>{{'USER.SKYCOIN_ADDRESS' | translate}}</div>
+      <div class="value">{{getLatestSkycoinAddress() ? getLatestSkycoinAddress() : 'N/A'}}</div>
+    </div>
+  </div>
+</div>
+
+<app-whitelist-app [username]="userId"></app-whitelist-app>
+
+<app-user-miners-for-admin [username]="userId"></app-user-miners-for-admin>

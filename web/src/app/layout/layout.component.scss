@@ -1,0 +1,16 @@
+@import 'variables';
+
+mat-sidenav-container, mat-sidenav-content {
+  min-height: 100vh;
+}
+
+mat-sidenav {
+  width: 300px;
+  min-height: 100vh;
+  color: $white;
+  background: $dark url(/assets/images/skybg.png) center 350px no-repeat;
+}
+
+main {
+  padding: 20px;
+}

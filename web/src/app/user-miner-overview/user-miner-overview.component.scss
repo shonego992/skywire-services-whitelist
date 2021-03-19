@@ -1,0 +1,39 @@
+@import 'variables';
+
+.panel {
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  margin: 100px auto 0;
+
+  img {
+    width: 209px;
+    margin-right: 20px;
+  }
+
+  .title {
+    color: $dark;
+    font-size: 20px;
+  }
+
+  .body {
+    color: $grey;
+    margin: 15px 0 20px;
+    line-height: 16px;
+  }
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+
+    img {
+      margin-right: 0;
+      margin-bottom: 40px;
+    }
+
+    > div {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

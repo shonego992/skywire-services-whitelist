@@ -1,0 +1,89 @@
+@import 'variables';
+
+.status {
+  width: 50%;
+
+  @media (max-width: 1400px) {
+    width: 100%;
+  }
+}
+
+a {
+  color: $primary;
+}
+
+.separator {
+  background: darken($white, 10%);
+  margin: 20px -20px;
+  width: calc(100% + 40px);
+  height: 1px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.grid {
+  display: flex;
+
+  > div, > form {
+    width: 50%;
+
+    &:first-child {
+      padding-right: 10px;
+    }
+
+    &:last-child {
+      padding-left: 10px;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    flex-direction: column;
+
+    > div, > form {
+      width: 100%;
+      padding: 0 !important;;
+    }
+  }
+}
+
+.buttons {
+  margin-top: 20px;
+  display: flex;
+}
+
+.prevnext {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.submissions {
+  display: flex;
+  align-items: flex-start;
+
+  > div {
+    flex: 1;
+    padding-left: 10px;
+  }
+
+  span {
+    display: block;
+    margin: 15px 0 10px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 18px;
+
+    li {
+      cursor: pointer;
+    }
+  }
+
+  .active {
+    color: $primary;
+  }
+}

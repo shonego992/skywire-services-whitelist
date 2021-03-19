@@ -1,0 +1,13 @@
+<div class="container">
+  <h3 mat-dialog-title>{{'MODALS.EDIT_ADDRESS' | translate}}</h3>
+  <div mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+      <input type="text" matInput formControlName="address" [placeholder]="'USER.SKYCOIN_ADDRESS' | translate">
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button class="btn" [mat-dialog-close]="1" (click)="save()">{{'MODALS.SAVE' | translate}}</button>
+    <button class="btn transparent" (click)="close()" tabindex="-1">{{'MODALS.CANCEL' | translate}}</button>
+  </div>
+</div>

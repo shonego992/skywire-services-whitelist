@@ -1,0 +1,30 @@
+<div class="card" *ngIf="user">
+  <div class="header">
+    <div class="title">{{ 'HEADER.ACCOUNT_INFO' | translate }}</div>
+  </div>
+  <div class="body">
+    <div class="data">
+      <div class="key"><mat-icon>email</mat-icon>{{'USER.USER_EMAIL' | translate}}</div>
+      <div class="value">{{user.username}}</div>
+    </div>
+    <div class="data">
+      <div class="key"><mat-icon>payment</mat-icon>{{'USER.SKYCOIN_ADDRESS' | translate}}</div>
+      <div class="value">{{getLatestSkycoinAddress()}}<mat-icon class="action" (click)="editAddress()">edit</mat-icon></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="header">
+    <div class="title">{{'USER.SKYCOIN_ADDRESS_HISTORY' | translate}}</div>
+  </div>
+  <div class="body grey">
+    <ul *ngFor="let address of user?.addressHistory; let i = index">
+      <li *ngIf="user?.addressHistory.length > 1; else noHistory">{{ address?.skycoinAddress }}</li>
+      <ng-template #noHistory><li>{{'USER.NO_PREVIOUS_HISTORY' | translate}}</li></ng-template>
+    </ul>
+    <ul *ngIf="!user?.addressHistory">
+      <li>{{'USER.NO_PREVIOUS_HISTORY' | translate}}</li>
+    </ul>
+  </div>
+</div>

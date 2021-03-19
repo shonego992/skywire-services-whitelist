@@ -1,0 +1,31 @@
+.exportSection {
+  display: flex;
+
+  .mat-form-field {
+    width: 250px;
+  }
+
+  .dateStart {
+    margin-right: 20px;
+  }
+
+  .dateEnd {
+    margin-right: 40px;
+  }
+
+  button {
+    align-self: center;
+  }
+
+  @media (max-width: 1150px) {
+    flex-direction: column;
+
+    button {
+      align-self: flex-start;
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}

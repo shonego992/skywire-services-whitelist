@@ -1,0 +1,5 @@
+ALTER TABLE miners 
+DROP COLUMN IF EXISTS batch_label;
+
+ALTER TABLE miners 
+DROP COLUMN IF EXISTS gifted;

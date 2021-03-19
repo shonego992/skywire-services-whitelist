@@ -1,0 +1,159 @@
+<div class="card">
+  <div class="header">
+    <div class="title">{{'WHITELIST.APPLICATION_ID' | translate}} #{{whitelistId}}</div>
+  </div>
+  <div class="body">
+    <div class="status">
+      <div class="data">
+        <div class="key"><mat-icon>label</mat-icon>{{'WHITELIST.CURRENT_STATUS' | translate}}</div>
+        <div class="value">{{currentStatus}}</div>
+      </div>
+      <div class="data">
+        <div class="key"><mat-icon>date_range</mat-icon>{{'WHITELIST.CREATED_AT' | translate}}</div>
+        <div class="value">{{dateCreated}}</div>
+      </div>
+      <div class="data">
+        <div class="key"><mat-icon>person</mat-icon>{{'WHITELIST.USERNAME' | translate}}</div>
+        <div class="value"><a [routerLink]="['/edit-user']" [queryParams]="{userId: username}">{{username}}</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="grid">
+  <form #formControl="ngForm">
+    <div class="card">
+      <div class="header">
+        <div class="title">{{ 'WHITELIST.STATUS' | translate }}</div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <mat-form-field color="accent">
+          <textarea rows="1" [readonly]="true" matInput #input class="form-control" placeholder="{{'WHITELIST.CHANGE_STATUS' | translate}}"
+                    name="current-status" value="{{mapStatus(viewingApplication.status)}}"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form" *ngIf="viewingApplication.adminComment">
+          <mat-form-field color="accent">
+              <textarea rows="1" [readonly]="true" matInput #input class="form-control" placeholder="{{'WHITELIST.COMMENT_ADMIN' | translate}}"
+                        [(ngModel)]="viewingApplication.adminComment" name="adminComment"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form" *ngIf="viewingApplication.userComment">
+          <mat-form-field color="accent">
+              <textarea rows="1" [readonly]="true" matInput #input class="form-control" placeholder="{{'WHITELIST.COMMENT_USER' | translate}}"
+                        [(ngModel)]="viewingApplication.userComment" name="userComment"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <div class="title">{{'WHITELIST.APPLICATION_DETAILS' | translate}}</div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <mat-form-field color="accent">
+              <textarea rows="1" [readonly]="true" type="text" matInput placeholder="{{'WHITELIST.LOCATION' | translate}}"
+                        [(ngModel)]="viewingApplication.location" name="location"></textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="form">
+          <mat-form-field color="accent">
+              <textarea rows="5" type="text" [readonly]="true" matInput placeholder="{{'WHITELIST.DESCRIPTION' | translate}}"
+                        [(ngModel)]="viewingApplication.description" name="description"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <div class="title">{{'WHITELIST.NODE_KEYS' | translate}}</div>
+      </div>
+      <div class="body">
+        <div>{{'WHITELIST.CURRENT_NODE_NUMBERS' | translate}} {{currentNodeNumbers}}</div>
+        <div *ngIf="viewingApplication?.nodes">
+          <div>
+            {{'WHITELIST.NODE_KEYS_ADDED' | translate}} {{viewingApplication?.nodes?.length}}
+          </div>
+          <mat-list dense *ngFor="let node of viewingApplication?.nodes; let i = index">
+            <div>
+              <mat-list-item>{{ node.key }}</mat-list-item>
+            </div>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="images && images.length > 0">
+      <div class="header">
+        <div class="title">{{ 'MINER.IMAGES' | translate }}</div>
+      </div>
+      <div class="body">
+        <ngx-image-gallery id="currentImages" #currentImages
+                           [images]="images"
+                           [conf]="conf"
+                           (onClose)="galleryClosed('currentImages')"
+                           (onImageClicked)="galleryImageClicked($event, 'currentImages')"
+        ></ngx-image-gallery>
+      </div>
+    </div>
+  </form>
+  <div>
+    <div class="card" *ngIf="application.changeHistory && application.changeHistory.length >= 2">
+      <div class="header">
+        <div class="title">{{'WHITELIST.TOTAL_SUBMISSIONS' | translate}} {{application.changeHistory.length}}</div>
+      </div>
+      <div class="body submissions">
+        <button mat-icon-button [disabled]="viewingApplicationIndex === 0" (click)="previousChangeHistory()"><mat-icon>keyboard_arrow_left</mat-icon></button>
+        <div>
+          <span>{{'WHITELIST.ALL_SUBMISSIONS' | translate}}</span>
+          <ul>
+            <li *ngFor="let change of application.changeHistory; let i = index" [ngClass]="{ 'active': i == viewingApplicationIndex}" (click)="setViewingIndex(i)">
+              {{ change.id }} {{getDateValue(change.createdAt)}}
+            </li>
+          </ul>
+        </div>
+        <button mat-icon-button [disabled]="viewingApplicationIndex === application.changeHistory.length - 1" (click)="nextChangeHistory()"><mat-icon>keyboard_arrow_right</mat-icon></button>
+      </div>
+    </div>
+
+    <div class="card" *ngIf="application.currentStatus !== 4">
+      <div class="header">
+        <div class="title">{{ 'WHITELIST.ACTIONS' | translate }}</div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <mat-form-field color="accent">
+              <textarea matInput #input class="form-control" placeholder="{{'WHITELIST.COMMENT_ADMIN' | translate}}"
+                        [(ngModel)]="newAdminComment" name="newAdminComment"></textarea>
+          </mat-form-field>
+        </div>
+        <div class="form">
+          <mat-form-field color="accent">
+                <textarea matInput #input class="form-control" placeholder="{{'WHITELIST.COMMENT_USER' | translate}}"
+                          [(ngModel)]="newUserComment" name="newUserComment"></textarea>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-select [(value)]="whitelistAction">
+            <mat-option value = 1>{{'WHITELIST.APPROVE' | translate}}</mat-option>
+            <mat-option value = 2>{{'WHITELIST.DECLINE' | translate}}</mat-option>
+            <mat-option value = 3>{{'WHITELIST.DISABLE' | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="buttons">
+          <button class="btn" [disabled]="checkIfSubmitDisabled()" (click)="updateStatus()">{{'WHITELIST.SAVE' | translate}}</button>
+          <button class="btn transparent" (click)="closeEditWhitelist()" tabindex="-1">{{'WHITELIST.CANCEL' | translate}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
